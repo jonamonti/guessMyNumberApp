@@ -8,6 +8,7 @@ import AppLoading from 'expo-app-loading';
 
 import Game from './screens/game';
 import GameOver from './screens/gameOver';
+import { StatusBar } from 'expo-status-bar';
 
 export default function App() {
 	// local state
@@ -64,23 +65,26 @@ export default function App() {
 	}
 
 	return (
-		<LinearGradient colors={['white', 'orange']} style={styles.container}>
-			<ImageBackground
-				source={require('./assets/dices.png')}
-				style={styles.container}
-				imageStyle={styles.backgroundImage}
-				resizeMode='cover'
-			>
-				<SafeAreaView style={styles.container}>{screen}</SafeAreaView>
-			</ImageBackground>
-		</LinearGradient>
+		<>
+			<StatusBar style='dark' />
+			<LinearGradient colors={['white', 'orange']} style={styles.container}>
+				<ImageBackground
+					source={require('./assets/dices.png')}
+					style={styles.container}
+					imageStyle={styles.backgroundImage}
+					resizeMode='cover'
+				>
+					<SafeAreaView style={styles.container}>{screen}</SafeAreaView>
+				</ImageBackground>
+			</LinearGradient>
+		</>
 	);
 }
 
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		// backgroundColor: '#ffeb3b',
+		justifyContent: 'center',
 	},
 	backgroundImage: {
 		opacity: 0.25,

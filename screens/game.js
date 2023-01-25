@@ -1,5 +1,12 @@
 import { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Alert, FlatList } from 'react-native';
+import {
+	View,
+	Text,
+	StyleSheet,
+	Alert,
+	FlatList,
+	useWindowDimensions,
+} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 import Title from '../components/title';
@@ -37,6 +44,7 @@ export default function Game({
 
 	// variables
 	const initialGuess = generateRandomBetween(1, 100, userNumber);
+	const { height, width } = useWindowDimensions();
 
 	// local states
 	const [currentGuess, setCurrentGuess] = useState(initialGuess);
@@ -80,8 +88,8 @@ export default function Game({
 		setGuessRounds((currentGuessRound) => [newRndNumber, ...currentGuessRound]);
 	};
 
-	return (
-		<View style={s.container}>
+	const defaultContent = (
+		<>
 			<View style={s.titleContainer}>
 				<Title>Oponent's guess</Title>
 			</View>
@@ -107,6 +115,35 @@ export default function Game({
 					</View>
 				</View>
 			</Card>
+		</>
+	);
+
+	const landscapeContent = (
+		<>
+			<View style={s.titleContainer}>
+				<Title>Oponent's guess</Title>
+			</View>
+			<View style={s.buttonsContainerLandsc}>
+				<View style={s.buttonContainer}>
+					<PrimaryButton onPressConfirm={nextGuessHandler.bind(this, 'lower')}>
+						<Ionicons name='md-remove' size={24} />
+					</PrimaryButton>
+				</View>
+				<NumberContainer>{currentGuess}</NumberContainer>
+				<View style={s.buttonContainer}>
+					<PrimaryButton
+						onPressConfirm={nextGuessHandler.bind(this, 'greater')}
+					>
+						<Ionicons name='md-add' size={24} />
+					</PrimaryButton>
+				</View>
+			</View>
+		</>
+	);
+
+	return (
+		<View style={[s.container, { marginTop: width > 500 ? 50 : 100 }]}>
+			{width > 500 ? landscapeContent : defaultContent}
 			<View style={s.listContainer}>
 				<FlatList
 					data={guessRounds}
@@ -136,6 +173,10 @@ const s = StyleSheet.create({
 	buttonsContainer: {
 		flexDirection: 'row',
 		justifyContent: 'center',
+	},
+	buttonsContainerLandsc: {
+		flexDirection: 'row',
+		alignItems: 'center',
 	},
 	buttonContainer: {
 		flex: 1,

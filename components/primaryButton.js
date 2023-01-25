@@ -1,5 +1,6 @@
 import { View, Text, StyleSheet, Pressable } from 'react-native';
 import colors from '../utils/colors';
+import { deviceDims } from '../utils/constants';
 
 export default function PrimaryButton({ children, onPressConfirm }) {
 	return (
@@ -36,6 +37,7 @@ const styles = StyleSheet.create({
 	buttonText: {
 		textAlign: 'center',
 		fontWeight: 'bold',
+		fontSize: deviceDims.width < 1000 ? 12 : 12 * 2,
 	},
 	pressed: {
 		opacity: 0.75,

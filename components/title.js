@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, Platform } from 'react-native';
 
 import Colors from '../utils/colors';
 
@@ -10,17 +10,19 @@ export default function Title({ children }) {
 	);
 }
 
+const deviceDims = Dimensions.get('window');
+
 const s = StyleSheet.create({
 	container: {
 		// flex: 1,
 		width: '90%',
-		borderWidth: 2,
+		borderWidth: Platform.OS === 'android' ? 2 : 0,
 		borderColor: 'black',
 		borderRadius: 8,
 		marginHorizontal: 24,
 	},
 	text: {
-		fontSize: 24,
+		fontSize: deviceDims.width < 1000 ? 24 * 0.75 : 24,
 		fontFamily: 'open-sans-bold',
 		color: 'black',
 		textAlign: 'center',
